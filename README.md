@@ -33,8 +33,8 @@ The general idea is to create an application in which the different Pokemon can 
 A React / Redux application was developed containing the following screens / paths.
 
 __Main page__:
-- [] It has a background image representative of the project
-- [] Button to enter home (`Main route`)
+- [ ] It has a background image representative of the project
+- [ ] Button to enter home (`Main route`)
 
 __Main route__:
 - [ ] Search input to find pokemons by name (The search will be exact, that is, it will only find the pokemon if the full name is entered)
