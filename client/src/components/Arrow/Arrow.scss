@@ -1,0 +1,18 @@
+.arrow_both{
+    display: flex;
+}
+.arrow-left{
+   flex-direction: row;
+}
+.arrow-right{
+    flex-direction: row;
+}
+.paged_pokemon{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    color:white;
+    margin-bottom:4rem;
+    
+  }

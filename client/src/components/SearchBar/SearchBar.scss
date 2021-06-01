@@ -1,0 +1,40 @@
+.formStyle{
+        display: flex;
+        top: 15vh;
+        grid-gap: 5px;
+
+    input  {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 100%;
+        background: #f1f1f1;
+        color:#222;
+        font-weight: 700;
+        font-size: 1.2rem;
+        -webkit-text-stroke: transparent;
+    }
+    button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none; 
+        cursor: pointer;        
+        
+        }
+    button:hover {
+        background: #0b7dda;
+        
+      }
+      
+}
+.icon-search{
+    
+    position: relative;
+ 
+  }
