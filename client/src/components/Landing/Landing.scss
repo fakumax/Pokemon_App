@@ -43,28 +43,24 @@ body{
 .base a {
     justify-content: center;
     text-decoration: none;
-    padding: 0px 80px;
-    -webkit-text-stroke: 0px;
+    padding: 0px 120px;
     color:white;
-    font-size: large;
+
     background-color: #222;
     border-radius: 10px ;
     position: absolute;
-   &:hover{
-       background-color: #fff;
-       color:#222;
-   }
-
     
 }
-
-
 .base h1{
     font-size:50px;
     -webkit-text-stroke: 3px #3a5da9;
      height:60vh;
 }
-
+.base a:hover {
+    color: #222;
+    background-color:white;
+    border : 2px solid #222;
+  }
 
 
 @media (max-width: 720px) {

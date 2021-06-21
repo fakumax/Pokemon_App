@@ -7,17 +7,10 @@ import Button from "@material-ui/core/Button";
 const Landing = () => {
   return (
     <>
-      <div className='containerBase'>
+       <div className='containerBase'>
         <div className='base'>
           <h1>Welcome to Pokémon Finder</h1>
-          <Button
-            variant='contained'
-            size = 'medium'
-            color='primary'
-            component={Link}
-            to='/home'
-            >Go!
-          </Button>
+          <Link to='/home'>Go!</Link>
         </div>
       </div>
     </>
