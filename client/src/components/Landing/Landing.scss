@@ -43,14 +43,21 @@ body{
 .base a {
     justify-content: center;
     text-decoration: none;
-    padding: 0px 120px;
+    padding: 0px 80px;
+    -webkit-text-stroke: 0px;
     color:white;
-
+    font-size: large;
     background-color: #222;
     border-radius: 10px ;
     position: absolute;
+   
     
 }
+.base button{
+        color:#222;
+        background-color: white;
+    }
+
 .base h1{
     font-size:50px;
     -webkit-text-stroke: 3px #3a5da9;
@@ -58,7 +65,7 @@ body{
 }
 .base a:hover {
     color: #222;
-    background-color:white;
+   
     border : 2px solid #222;
   }
 
