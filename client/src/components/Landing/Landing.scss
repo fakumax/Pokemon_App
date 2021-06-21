@@ -50,24 +50,21 @@ body{
     background-color: #222;
     border-radius: 10px ;
     position: absolute;
-   
+   &:hover{
+       background-color: #fff;
+       color:#222;
+   }
+
     
 }
-.base button{
-        color:#222;
-        background-color: white;
-    }
+
 
 .base h1{
     font-size:50px;
     -webkit-text-stroke: 3px #3a5da9;
      height:60vh;
 }
-.base a:hover {
-    color: #222;
-   
-    border : 2px solid #222;
-  }
+
 
 
 @media (max-width: 720px) {
