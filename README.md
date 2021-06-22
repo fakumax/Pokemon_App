@@ -22,7 +22,6 @@ The general idea is to create an application in which the different Pokemon can 
   - Create new pokemons 
 
 #### Used technology:
-- [ ] Material-UI
 - [ ] React
 - [ ] Redux
 - [ ] Express
@@ -103,4 +102,4 @@ It is developer on a server in Node / Express with the following paths:
 #### Testing
 - [ ] At least it has a frontend component with its respective tests
 - [ ] At least it has a backend path with its respective tests
-- [ ] At least you have a database model with its respective tests 
+- [ ] At least it has a database model with its respective tests 
