@@ -4,19 +4,6 @@ const { POKEMON_URL } = require('../constants');
 const { Sequelize } = require('sequelize');
 var validator = require('validator');
 
-/* Closure Function offset  */
-// const offset = () => {
-//   var initialValue = 0;
-//   const countOffset = (count) => {
-//     initialValue += count;
-//     console.log(initialValue);
-//   };
-//   return countOffset;
-// };
-// var next = offset();
-
-
-
 
 var count = 0;
 var offsetDb = 0;
