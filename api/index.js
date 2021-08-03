@@ -17,12 +17,22 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const app = require('./src/app.js');
-const { conn } = require('./src/db.js');
+require('dotenv').config()
+const server = require('./src/app.js');
+const { sequelize } = require('./src/db.js');
 
-conn.sync({ force: true }).then(() => {
-  console.log('Conexión con la base de datos exitosa');
-  const server = app.listen(3001, () => {
-     console.log(`Listening http://localhost:${server.address().port}`);
-  });
-});
+// Syncing all the models at once.
+const connectDB = async() => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+    await sequelize.sync({ force: false }); //FORCE : true to write data
+    console.log("All models were synchronized successfully.");
+    await server.listen(process.env.PORT, () => {
+      console.log(`Listening on PORT ${process.env.PORT}`);
+    });
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+}
+connectDB();
