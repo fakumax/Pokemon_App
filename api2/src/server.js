@@ -3,7 +3,8 @@ import express from 'express';
 
 // Crear una instancia de Express
 const app = express();
-const port = 3000; // Puerto en el que el servidor escuchará las solicitudes
+
+const port = process.env.PORT || 3001; // Puerto en el que el servidor escuchará las solicitudes
 
 // Middleware para analizar las solicitudes con contenido JSON
 app.use(express.json());
