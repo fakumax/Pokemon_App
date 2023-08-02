@@ -9,6 +9,9 @@ const port = process.env.PORT || 3001; // Puerto en el que el servidor escucharÃ
 // Middleware para analizar las solicitudes con contenido JSON
 app.use(express.json());
 
+// Middleware para analizar las solicitudes con contenido URL-encoded
+app.use(express.urlencoded({ extended: true }));
+
 // Ruta de ejemplo para una solicitud GET
 app.get('/', (req, res) => {
   res.send('Â¡Hola, mundo! Esta es una solicitud GET en Express.js');
