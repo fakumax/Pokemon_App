@@ -1,13 +1,13 @@
 export interface IPokemon {
   id: number;
   name: string;
-  abilities?: AbilitiesEntity[] | null;
+  abilities?: AbilitiesEntity[] | undefined;
   base_experience: number;
-  height: number;
+  height?: number | undefined;
   order: number;
   sprites: Sprites;
-  stats?: StatsEntity[] | null;
-  types?: TypesEntity[] | null;
+  stats?: StatsEntity[] | undefined;
+  types: TypesEntity[];
   weight: number;
 }
 export interface AbilitiesEntity {
