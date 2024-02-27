@@ -20,7 +20,7 @@ export const GetPokemon = async () => {
       abilities: pokemon.abilities?.map((abi: any) => abi.ability.name),
       base_experience: pokemon.base_experience,
       height: pokemon.height,
-      sprites: pokemon.sprites,
+      sprites: pokemon.sprites.other,
       hp: pokemon.stats?.find((stats) => stats.stat.name === "hp")?.base_stat,
       attack: pokemon.stats?.find((stats) => stats.stat.name === "attack")
         ?.base_stat,

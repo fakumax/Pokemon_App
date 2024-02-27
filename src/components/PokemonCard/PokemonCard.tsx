@@ -6,7 +6,7 @@ export interface PokemonListProps {
   abilities?: AbilitiesEntity[] | undefined;
   base_experience: number;
   height: number | undefined;
-  sprites: any;
+  sprites: Sprites;
   hp?: number | undefined;
   attack?: number | undefined;
   defense?: number | undefined;
@@ -28,6 +28,37 @@ export interface abilities {
   url: string;
 }
 
+export interface Sprites {
+  dream_world: DreamWorldOrIcons;
+  home: OtherImageOthers;
+  officialArtwork: OfficialartworkOrEmerald;
+  showdown: OtherImageShowdown;
+}
+
+export interface DreamWorldOrIcons {
+  front_default: string;
+  front_female?: null;
+}
+export interface OtherImageOthers {
+  front_default: string;
+  front_female?: null;
+  front_shiny: string;
+  front_shiny_female?: null;
+}
+export interface OfficialartworkOrEmerald {
+  front_default: string;
+  front_shiny: string;
+}
+export interface OtherImageShowdown {
+  backdefault: string;
+  backfemale?: null;
+  backshiny: string;
+  backshinyfemale?: null;
+  frontdefault: string;
+  frontfemale?: null;
+  frontshiny: string;
+  frontshinyfemale?: null;
+}
 interface listPokemonProps {
   listPokemon: PokemonListProps[];
 }
@@ -35,42 +66,32 @@ interface listPokemonProps {
 const PokemonCard = ({ listPokemon }: listPokemonProps): JSX.Element => {
   console.log("listpokemon", listPokemon);
   return (
-    <>
-      {listPokemon.map((poke) => {
-        console.log("poke", poke.name);
-
-        {
-          return (
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-              <a href="#!">
-                <img
-                  className="rounded-t-lg"
-                  src={poke.sprites.front_default}
-                  alt=""
-                />
-              </a>
-              <div className="p-6">
-                <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                  {poke.name}
-                </h5>
-                <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-                <button
-                  type="button"
-                  className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                  data-te-ripple-init
-                  data-te-ripple-color="light"
-                >
-                  Button
-                </button>
-              </div>
-            </div>
-          );
-        }
-      })}
-    </>
+    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+      {listPokemon.map((poke) => (
+        <div className="rounded-xl   max-w-sm	 	 bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+          <a href="#!">
+            <img
+              className="rounded-t-lg"
+              src={poke.sprites.home.front_default}
+              alt=""
+            />
+          </a>
+          <div className="p-6">
+            <h4 className="mb-4 text-4xl font-medium text-center text-neutral-800 dark:text-neutral-50 uppercase">
+              {poke.name}
+            </h4>
+            <button
+              type="button"
+              className=" sm:hidden rounded bg-primary px-6 pb-2 pt-2.5 mx-auto text-xs font-medium uppercase leading-normal text-white shadow-sm transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700 dark:shadow-sm dark:hover:shadow-none dark:focus:shadow-none dark:active:shadow-none"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+            >
+              Button
+            </button>
+          </div>
+        </div>
+      ))}
+    </section>
   );
 };
 export { PokemonCard };
