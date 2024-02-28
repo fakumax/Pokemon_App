@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export interface PokemonListProps {
   id: number;
   name: string;
@@ -67,11 +69,16 @@ const PokemonCard = ({ listPokemon }: listPokemonProps): JSX.Element => {
   console.log("listpokemon", listPokemon);
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-      {listPokemon.map((poke) => (
-        <div className="rounded-xl   max-w-sm	 	 bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+      {listPokemon.map((poke, index) => (
+        <div
+          key={index}
+          className="rounded-xl   max-w-sm	 	 bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+        >
           <a href="#!">
-            <img
+            <Image
               className="rounded-t-lg"
+              width={500}
+              height={500}
               src={poke.sprites.home.front_default}
               alt=""
             />

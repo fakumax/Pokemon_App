@@ -1,0 +1,18 @@
+@layer components {
+    .heart-icon {
+      @apply text-red-500;  
+      animation: pulse-heart 1s infinite linear; 
+    }
+  }
+
+  @keyframes pulse-heart {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
