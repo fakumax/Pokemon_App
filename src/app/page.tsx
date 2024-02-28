@@ -1,3 +1,5 @@
+import { FooterSelf } from "@/components/FooterSelf";
+import { PokePagination } from "@/components/PokePagination";
 import { PokemonCard } from "@/components/PokemonCard/PokemonCard";
 import { GetPokemon } from "@/lib/pokemonAPI";
 
@@ -6,8 +8,12 @@ export default async function Home() {
   console.log("listPokemon", listPokemon);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <PokemonCard listPokemon={listPokemon} />
-    </main>
+    <>
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <PokemonCard listPokemon={listPokemon} />
+      </main>
+      <PokePagination />
+      <FooterSelf />
+    </>
   );
 }
