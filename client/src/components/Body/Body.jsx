@@ -85,7 +85,7 @@ const Body = ({ searchResults }) => {
         ) : (
           <div className='loading-container'>
             <div className='spinner'></div>
-            <p>Cargando Pokémons...</p>
+            <p>Loading Pokémons...</p>
           </div>
         )
         }

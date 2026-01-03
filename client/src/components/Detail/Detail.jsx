@@ -14,7 +14,7 @@ const Detail = () => {
       <div className='details_pokemon'>
         <div className='loading-container'>
           <div className='spinner'></div>
-          <p>Cargando Pokémon...</p>
+          <p>Loading Pokémon...</p>
         </div>
       </div>
     );
@@ -24,7 +24,7 @@ const Detail = () => {
     return (
       <div className='details_pokemon'>
         <div className='loading-container'>
-          <p>Error al cargar el Pokémon</p>
+          <p>Error loading Pokémon</p>
         </div>
       </div>
     );
