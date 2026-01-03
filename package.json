@@ -1,0 +1,16 @@
+{
+  "name": "pokemon-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pokemon App - Monorepo with API and Client",
+  "scripts": {
+    "dev": "pnpm --parallel -r dev",
+    "dev:client": "pnpm --filter client dev",
+    "dev:api": "pnpm --filter api start",
+    "build": "pnpm -r build",
+    "build:client": "pnpm --filter client build"
+  },
+  "keywords": ["pokemon", "react", "nodejs"],
+  "author": "fakumax",
+  "license": "ISC"
+}
