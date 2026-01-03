@@ -53,33 +53,39 @@ export default async function pokemonRoutes(fastify) {
         cacheTimestamp = now;
       }
       
-      // Obtener pokémons creados localmente
-      const localPokemons = await prisma.pokemon.findMany({
-        include: {
-          types: {
-            include: {
-              type: true
+      // Obtener pokémons creados localmente (con manejo de error)
+      let formattedLocalPokemons = [];
+      try {
+        const localPokemons = await prisma.pokemon.findMany({
+          include: {
+            types: {
+              include: {
+                type: true
+              }
             }
+          },
+          orderBy: {
+            createdAt: 'desc'
           }
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      });
-      
-      // Formatear pokémons locales
-      const formattedLocalPokemons = localPokemons.map(p => ({
-        id: p.id,
-        name: p.name,
-        life: p.life,
-        strength: p.strength,
-        defense: p.defense,
-        speed: p.speed,
-        height: p.height,
-        weight: p.weight,
-        img: p.img || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-        types: p.types.map(pt => pt.type)
-      }));
+        });
+        
+        // Formatear pokémons locales
+        formattedLocalPokemons = localPokemons.map(p => ({
+          id: p.id,
+          name: p.name,
+          life: p.life,
+          strength: p.strength,
+          defense: p.defense,
+          speed: p.speed,
+          height: p.height,
+          weight: p.weight,
+          img: p.img || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+          types: p.types.map(pt => pt.type)
+        }));
+      } catch (dbError) {
+        fastify.log.warn('Could not fetch local pokemons from DB:', dbError.message);
+        // Continuar sin los pokémons locales
+      }
       
       // Crear un Set con nombres de pokémons locales (en minúsculas)
       const localNames = new Set(formattedLocalPokemons.map(p => p.name.toLowerCase()));
