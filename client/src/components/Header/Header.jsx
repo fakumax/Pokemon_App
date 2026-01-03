@@ -9,7 +9,7 @@ import Logo from '../../assets/img/pokemon.png';
 import { useTheme } from '../../hooks/useTheme';
 import './Header.scss';
 
-const Header = () => {
+const Header = ({ onSearch }) => {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -56,7 +56,7 @@ const Header = () => {
 
           {/* SearchBar */}
           <Box sx={{ flex: 1, maxWidth: '500px', mx: 3 }}>
-            <SearchBar />
+            <SearchBar onSearch={onSearch} />
           </Box>
 
           {/* Botones de acción */}

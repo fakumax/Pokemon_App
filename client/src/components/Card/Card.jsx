@@ -4,17 +4,19 @@ import './Card.scss';
 
 const Card = (props) => {
   return (
-    <div className='card'>
-      <img className='card__img' src={props.img} alt='' />
-      <div className='card-container'>
-        <Link className='card__header-title' to={`/pokemon/${props.id}`}>
-          <span>{props.name}</span>
-        </Link>
-        <span className='card__header-meta'>
-          {props.types?.map((v) => v.name).join(' - ')}
-        </span>
+    <Link to={`/pokemon/${props.id}`} className='card-link'>
+      <div className='card'>
+        <img className='card__img' src={props.img} alt='' />
+        <div className='card-container'>
+          <div className='card__header-title'>
+            <span>{props.name}</span>
+          </div>
+          <span className='card__header-meta'>
+            {props.types?.map((v) => v.name).join(' - ')}
+          </span>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

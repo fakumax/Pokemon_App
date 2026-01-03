@@ -12,6 +12,10 @@ import axios from 'axios';
 // Configurar axios base URL
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
+// Inicializar tema desde localStorage
+const savedTheme = localStorage.getItem('pokemon-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
 // Crear cliente de React Query
 const queryClient = new QueryClient({
   defaultOptions: {

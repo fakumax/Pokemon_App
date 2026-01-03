@@ -72,25 +72,44 @@ export default async function pokemonRoutes(fastify) {
   fastify.get('/:id', async (request, reply) => {
     const { id } = request.params;
 
-    const pokemon = await prisma.pokemon.findUnique({
-      where: { id },
-      include: {
-        types: {
-          include: {
-            type: true
+    try {
+      // Primero verificar si el caché está vigente
+      const now = Date.now();
+      if (!pokemonCache || !cacheTimestamp || (now - cacheTimestamp) > CACHE_DURATION) {
+        pokemonCache = await fetchPokemonsFromAPI();
+        cacheTimestamp = now;
+      }
+
+      // Buscar en el caché de la PokeAPI
+      const cachedPokemon = pokemonCache.find(p => p.id === id);
+      if (cachedPokemon) {
+        return cachedPokemon;
+      }
+
+      // Si no está en caché, buscar en la base de datos (pokémon creados por el usuario)
+      const pokemon = await prisma.pokemon.findUnique({
+        where: { id },
+        include: {
+          types: {
+            include: {
+              type: true
+            }
           }
-        }
-      },
-    });
+        },
+      });
 
-    if (!pokemon) {
-      return reply.status(404).send({ error: 'Pokemon not found' });
+      if (!pokemon) {
+        return reply.status(404).send({ error: 'Pokemon not found' });
+      }
+
+      return {
+        ...pokemon,
+        types: pokemon.types.map(pt => pt.type)
+      };
+    } catch (error) {
+      fastify.log.error(error);
+      return reply.status(500).send({ error: error.message });
     }
-
-    return {
-      ...pokemon,
-      types: pokemon.types.map(pt => pt.type)
-    };
   });
 
   // POST /pokemons - Create new pokemon

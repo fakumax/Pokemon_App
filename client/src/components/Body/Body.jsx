@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useGetAllPokemons, useGetAllTypes } from '../../hooks/usePokemon';
-import { usePokemonStore } from '../../store/usePokemonStore';
 import Cards from '../Cards/Cards';
 import Filters from '../Filters/Filters';
 import Arrow from '../Arrow/Arrow';
@@ -9,24 +8,20 @@ import './Body.scss';
 import { VscFilter } from 'react-icons/vsc';
 //-------------------------
 
-const Body = () => {
-  const pokemon = usePokemonStore((state) => state.pokemon);
-  const pokemon_only = usePokemonStore((state) => state.pokemon_only);
-  const pokemon_types = usePokemonStore((state) => state.pokemon_types);
- 
-  const { isLoading: loadingPokemons } = useGetAllPokemons();
-  const { isLoading: loadingTypes } = useGetAllTypes();
+const Body = ({ searchResults }) => {
+  const { data: pokemons = [], isLoading: loadingPokemons } = useGetAllPokemons();
+  const { data: types = [], isLoading: loadingTypes } = useGetAllTypes();
 
   const [pokemonList, setPokemonList] = useState([]);
   const [filter, setFilters] = useState(false);
 
   useEffect(() => {
-    setPokemonList(pokemon);
-  }, [pokemon]);
+    setPokemonList(pokemons);
+  }, [pokemons]);
 
   //------ PAGINATION-----------
 
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [itemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState([]);
@@ -34,13 +29,14 @@ const Body = () => {
   useEffect(() => {
     setTotalPages(Math.ceil(pokemonList.length / itemsPerPage));
     setPage(pokemonList.slice(0, 12));
-  }, [pokemonList]);
+    setCurrentPage(1);
+  }, [pokemonList, itemsPerPage]);
 
   useEffect(() => {
     const lastIndex = currentPage * itemsPerPage;
     const firstIndex = lastIndex - itemsPerPage;
     setPage(pokemonList.slice(firstIndex, lastIndex));
-  }, [currentPage]);
+  }, [currentPage, pokemonList, itemsPerPage]);
 
   const handlePageclick = (e) => {
     e.preventDefault();
@@ -64,24 +60,28 @@ const Body = () => {
       {/*-- ACTIVE ONLY IF STATE === TRUE --*/}
       {filter && (
         <div className='filters-show'>
-          <Filters pokemon={pokemon} setPokemonList={setPokemonList} pokemon_types={pokemon_types}/>
+          <Filters pokemon={pokemons} setPokemonList={setPokemonList} pokemon_types={types}/>
         </div>
       )}
 
       {/*-- IF POKEMON SEARCH HAS A RESULT --*/}
-      <div className={`${pokemon_only.length ? 'Body_search' : 'Body_result'} ${filter ? 'with-filters' : ''}`}>
-        {pokemon_only.length>0 && <Cards pokemons={pokemon_only} />}
-        {pokemonList.length ? (
+      <div className={`${searchResults?.length ? 'Body_search' : 'Body_result'} ${filter ? 'with-filters' : ''}`}>
+        {searchResults?.length > 0 ? (
+          <Cards pokemons={searchResults} />
+        ) : pokemonList.length ? (
            /*--RENDER CARDS AND ARROW IF NOT LOADING  --*/ 
           <div>
             <Cards pokemons={page} />
             <Arrow
-              // totalPages={totalPages}
-              // currentPage={currentPage}
               handlePageclick={handlePageclick}
             />
           </div>
-        ) : (<p className='Body_search'>LOADING</p>)
+        ) : (
+          <div className='loading-container'>
+            <div className='spinner'></div>
+            <p>Cargando Pokémons...</p>
+          </div>
+        )
         }
       </div>
     </>
