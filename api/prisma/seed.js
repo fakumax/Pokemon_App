@@ -1,12 +1,6 @@
-import { PrismaClient } from '@prisma/client';
-import { PrismaLibSql } from '@prisma/adapter-libsql';
+import 'dotenv/config';
+import { prisma } from '../src/lib/prisma.js';
 import axios from 'axios';
-
-const adapter = new PrismaLibSql({
-  url: 'file:./dev.db',
-});
-
-const prisma = new PrismaClient({ adapter });
 
 const POKEAPI_URL = 'https://pokeapi.co/api/v2';
 

@@ -16,6 +16,9 @@ importers:
       '@libsql/client':
         specifier: ^0.15.15
         version: 0.15.15
+      '@prisma/adapter-libsql':
+        specifier: ^7.2.0
+        version: 7.2.0
       '@prisma/client':
         specifier: ^7.2.0
         version: 7.2.0(prisma@7.2.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
@@ -32,9 +35,6 @@ importers:
         specifier: ^4.3.4
         version: 4.3.4
     devDependencies:
-      '@prisma/adapter-libsql':
-        specifier: ^7.2.0
-        version: 7.2.0
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
