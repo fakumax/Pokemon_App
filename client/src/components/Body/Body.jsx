@@ -55,7 +55,10 @@ const Body = () => {
 
   return (
     <>
-      <button className='filters-button' onClick={() => setFilters(!filter)}>
+      <button 
+        className={`filters-button ${filter ? 'active' : ''}`}
+        onClick={() => setFilters(!filter)}
+      >
         <VscFilter className='icon-filter' />
       </button>
       {/*-- ACTIVE ONLY IF STATE === TRUE --*/}
@@ -66,7 +69,7 @@ const Body = () => {
       )}
 
       {/*-- IF POKEMON SEARCH HAS A RESULT --*/}
-      <div className={pokemon_only.length ? 'Body_search' : 'Body_result'}>
+      <div className={`${pokemon_only.length ? 'Body_search' : 'Body_result'} ${filter ? 'with-filters' : ''}`}>
         {pokemon_only.length>0 && <Cards pokemons={pokemon_only} />}
         {pokemonList.length ? (
            /*--RENDER CARDS AND ARROW IF NOT LOADING  --*/ 

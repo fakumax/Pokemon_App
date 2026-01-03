@@ -1,25 +1,21 @@
-body{
-    padding:0px !important;
-    margin: 0;
-}
-.containerBase{
-    background: url(../../assets/img/pokemonFront.jpg) no-repeat center center fixed; 
-    background-size: cover;
-    background-position: center 70%;
-    position: fixed;
+.containerBase {
+  background: url(../../assets/img/pokemonFront.jpg) no-repeat center center fixed; 
+  background-size: cover;
+  background-position: center 70%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(245,245,245,0.4) 100%);
-    }
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+  }
 }

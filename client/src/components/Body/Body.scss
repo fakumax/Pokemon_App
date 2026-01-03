@@ -1,59 +1,96 @@
 .Body_search {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    min-height: 100vh;
-    margin-top:2rem;
-    background-color: #222;
-    color: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 40px 20px;
+  margin-top: 4rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
-.Body_result{
-  margin-top:3rem;
-}
-// .Body_search{
-  
-//   position: absolute;
-//   left: 41.5%;
-//   top:4rem;
-//   display: flex;  
-//   z-index: 900;
 
-// }
+.Body_result {
+  padding: 20px;
+  margin-top: 4rem;
+  background: var(--bg-primary);
+  min-height: calc(100vh - 100px);
+  transition: all 0.3s ease;
+
+  &.with-filters {
+    margin-top: 0;
+  }
+}
+
+.filters-show {
+  padding: 10px 0;
+  margin-top: 4rem;
+  animation: slideDown 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* FILTER BUTTON */
-.filters-button{
-  border:none;
+.filters-button {
+  position: fixed;
+  top: 5rem;
+  right: 100px;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: var(--bg-card);
+  box-shadow: 0 4px 12px var(--shadow);
   cursor: pointer;
-  width: 60px;
-  cursor: pointer;
-  position: absolute;
-  top: 60px;
-  float: right;
-  right: 40px;
-  &:hover{
-    background:transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+
+  &.active {
+    background: #DC0A2D;
+    border-color: #DC0A2D;
+    box-shadow: 0 6px 20px rgba(220, 10, 45, 0.4);
+
+    .icon-filter {
+      color: white;
+    }
   }
-  &:active{
-    background:transparent;
+
+  &:hover:not(.active) {
+    background: var(--bg-card);
+    border-color: #DC0A2D;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(220, 10, 45, 0.2);
   }
-  &:focus{
-    background:transparent;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus:not(:active):not(.active) {
+    background: var(--bg-card);
+    border-color: var(--border-color);
   }
 }
+
 /* ICON FILTER */
-.icon-filter{
-  color:#ffcb05;
-  font-size:30px;
-  &:hover{
-    color:white;  
-    border:2px solid #fff;
-  }
-}
-.filters-show{
-  background:red;
-  top:40px;
+.icon-filter {
+  color: var(--text-primary);
+  font-size: 28px;
+  transition: all 0.2s ease;
 }

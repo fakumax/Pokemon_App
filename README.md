@@ -1,41 +1,82 @@
-# Project - Pokemon App
+# Project - Pokemon App 🎮
 
 <p align="left">
   <img height="150" src="./pokemon.png" alt="Pokemon" />
 </p>
 
-## Starting
+## ✨ Features
 
-How to start this project:
+A full-stack Pokemon application with:
+- 🔍 Search Pokemon by name
+- 🎯 Filter and sort Pokemon
+- 🌓 Dark/Light theme toggle with localStorage persistence
+- 📱 Responsive design
+- ⚡ Fast API caching system
+- 🎨 Modern UI with Material-UI
 
-The project has two folders: `api` and` client`. In these folders is the code for the back-end and the front-end respectively.
-In `api` complete the file called:` .env_ example` with the data from the database.
-Additionally it will be necessary to create from psql a database called `pokemon`
-The content of `client` was created using: Create React App. 
+## 🚀 Starting
 
-## About this App 
+The project has two folders: `api` (backend) and `client` (frontend).
 
-The general idea is to create an application in which the different Pokemon can be seen using the external api  [pokeapi](https://pokeapi.co/)  and from there, among other things:
+### Prerequisites
+- Node.js 18+
+- pnpm (recommended) or npm
 
-  - Search pokemons
-  - Filter / Sort them
-  - Create new pokemons 
+### Installation
 
-#### Used technology:
-- [ ] React
-- [ ] Redux
-- [ ] Express
-- [ ] Sequelize - PostgreSQL
+1. **Install dependencies (from root folder):**
+```bash
+pnpm install
+```
 
-#### Frontend
+2. **Setup Backend:**
+```bash
+cd api
+# Copy environment example
+cp .env_example .env
+# Edit .env with your configuration
 
-A React / Redux application was developed containing the following screens / paths.
+# Generate Prisma client and push schema
+npx prisma generate
+npx prisma db push
+```
 
-__Main page__:
-- [ ] It has a background image representative of the project
-- [ ] Button to enter home (`Main route`)
+3. **Run Development:**
 
-__Main route__:
+From root folder:
+```bash
+# Run both frontend and backend
+pnpm dev
+
+# Or individually:
+pnpm dev:api    # Backend on http://localhost:3001
+pnpm dev:client # Frontend on http://localhost:3000
+```
+
+## 🛠️ Technology Stack
+
+#### Frontend:
+- ⚛️ **React 19** + Vite
+- 🎨 **SCSS Modules** for styling
+- 🔄 **Zustand** for state management
+- 🌐 **Axios** for HTTP requests
+- 🎯 **React Router DOM** for navigation
+- 💅 **Material-UI** for components
+- 🌓 **Theme System** with localStorage
+
+#### Backend:
+- ⚡ **Fastify 5.6.2** - Fast web framework
+- 🗄️ **Prisma ORM 7.2.0** - Type-safe database
+- 💾 **LibSQL/Turso** - SQLite compatible database
+- 🔐 **Zod 4.3.4** - Schema validation
+- 🌍 **@fastify/cors** - CORS support
+- 📝 **dotenv** - Environment variables
+- 🎯 **@prisma/adapter-libsql** - Database adapter
+
+#### External API:
+- 🎮 **PokeAPI** (https://pokeapi.co/) - Pokemon data with in-memory caching (1-hour TTL)
+
+## 📱 Application Features
 - [ ] Search input to find pokemons by name (The search will be exact, that is, it will only find the pokemon if the full name is entered)
 - [ ] Area where you can see the list of pokemons. When starting, it loads the first results obtained from the `GET / pokemons` path and shows its:
   - Picture

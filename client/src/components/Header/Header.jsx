@@ -2,17 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Box, Typography, IconButton, Container } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import SearchBar from '../SearchBar/SearchBar';
 import Logo from '../../assets/img/pokemon.png';
+import { useTheme } from '../../hooks/useTheme';
 import './Header.scss';
 
 const Header = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <AppBar 
       position="fixed" 
       sx={{ 
-        backgroundColor: '#fff',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        backgroundColor: 'var(--header-bg)',
+        boxShadow: '0 2px 12px var(--shadow)',
+        transition: 'all 0.3s ease',
       }}
     >
       <Container maxWidth="xl">
@@ -53,21 +59,47 @@ const Header = () => {
             <SearchBar />
           </Box>
 
-          {/* Botón Crear */}
-          <IconButton
-            component={Link}
-            to='/create'
-            sx={{
-              color: '#DC0A2D',
-              '&:hover': {
-                color: '#A00821',
-                transform: 'scale(1.1)',
-              },
-              transition: 'all 0.2s ease',
-            }}
-          >
-            <AddCircleIcon sx={{ fontSize: 40 }} />
-          </IconButton>
+          {/* Botones de acción */}
+          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+            {/* Botón Theme */}
+            <IconButton
+              onClick={toggleTheme}
+              disableRipple
+              sx={{
+                color: 'var(--text-primary)',
+                backgroundColor: 'transparent',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                  backgroundColor: 'var(--bg-secondary)',
+                },
+                '&:active': {
+                  backgroundColor: 'var(--bg-secondary)',
+                },
+                '&:focus': {
+                  backgroundColor: 'transparent',
+                },
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+            </IconButton>
+
+            {/* Botón Crear */}
+            <IconButton
+              component={Link}
+              to='/create'
+              sx={{
+                color: '#DC0A2D',
+                '&:hover': {
+                  color: '#A00821',
+                  transform: 'scale(1.1)',
+                },
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <AddCircleIcon sx={{ fontSize: 40 }} />
+            </IconButton>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

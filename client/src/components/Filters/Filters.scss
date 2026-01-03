@@ -1,4 +1,12 @@
-.filter_show{
-   margin-top:10rem;
-    background:#222;
+.filter_show {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: transparent;
+  margin: 0 auto;
+  max-width: 900px;
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
 }

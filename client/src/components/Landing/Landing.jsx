@@ -75,15 +75,15 @@ const Landing = () => {
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
                 borderRadius: '50px',
-                background: 'linear-gradient(135deg, #DC0A2D 0%, #A00821 100%)',
+                background: 'linear-gradient(135deg, #FF3B5C 0%, #DC0A2D 100%)',
                 color: '#fff',
                 border: 'none',
-                boxShadow: '0 8px 20px rgba(220, 10, 45, 0.4)',
+                boxShadow: '0 8px 20px rgba(220, 10, 45, 0.35)',
                 transition: 'all 0.3s ease',
                 '&:hover': {
                   background: 'linear-gradient(135deg, #fff 0%, #f5f5f5 100%)',
                   color: '#DC0A2D',
-                  boxShadow: '0 12px 30px rgba(220, 10, 45, 0.6)',
+                  boxShadow: '0 12px 30px rgba(220, 10, 45, 0.5)',
                 }
               }}
             >

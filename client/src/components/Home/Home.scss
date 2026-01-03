@@ -1,0 +1,12 @@
+.home__container {
+  min-height: 100vh;
+  padding-top: 100px;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+.home__content {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}

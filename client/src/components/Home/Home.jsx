@@ -7,11 +7,9 @@ import './Home.scss';
 
 const Home = () => {
     return (
-        <Box className='home' sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+        <Box className='home' sx={{ minHeight: '100vh', backgroundColor: 'var(--bg-primary)', transition: 'background-color 0.3s ease' }}>
             <Header />
-            <Box sx={{ pt: '90px' }}> {/* Padding top para el AppBar fijo */}
-                <Body />
-            </Box>
+            <Body />
             <Footer />
         </Box>
     );

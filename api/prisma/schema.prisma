@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Pokemon {
+  id       String  @id @default(uuid())
+  name     String
+  life     Int?
+  strength Int?
+  defense  Int?
+  speed    Int?
+  height   Float?
+  weight   Float?
+  img      String?
+  types    PokemonType[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Type {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  pokemons PokemonType[]
+}
+
+model PokemonType {
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+  pokemonId String
+  type      Type    @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  typeId    Int
+
+  @@id([pokemonId, typeId])
+}

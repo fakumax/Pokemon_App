@@ -1,8 +1,41 @@
-.Filter-Type{
-    display: flex;
-    justify-content: center;
-    
+.Filter-Type {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  label {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 8px;
+    text-transform: capitalize;
+  }
+
+  select {
+    padding: 10px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+
+    &:hover {
+      border-color: #DC0A2D;
+    }
+
+    &:focus {
+      border-color: #DC0A2D;
+      box-shadow: 0 0 0 3px rgba(220, 10, 45, 0.1);
+    }
+  }
 }
-.Filter-Type-left{
-    padding-right: 20px;
+
+.Filter-Type-left {
+  display: flex;
+  align-items: center;
 }
