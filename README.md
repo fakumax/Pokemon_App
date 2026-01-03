@@ -57,21 +57,21 @@ pnpm dev:client # Frontend on http://localhost:3000
 
 #### Frontend:
 - ⚛️ **React 19** + Vite
-- 🎨 **SCSS Modules** for styling
+- 🎨 **SCSS** for styling
 - 🔄 **Zustand** for state management
+- 🔄 **React Query (@tanstack/react-query)** - Server state management
 - 🌐 **Axios** for HTTP requests
 - 🎯 **React Router DOM** for navigation
-- 💅 **Material-UI** for components
+- 💅 **Material-UI (MUI)** for components
 - 🌓 **Theme System** with localStorage
 
 #### Backend:
-- ⚡ **Fastify 5.6.2** - Fast web framework
-- 🗄️ **Prisma ORM 7.2.0** - Type-safe database
-- 💾 **LibSQL/Turso** - SQLite compatible database
-- 🔐 **Zod 4.3.4** - Schema validation
+- ⚡ **Fastify 5** - Fast web framework
+- 🗄️ **Prisma ORM 7** - Type-safe database
+- 💾 **LibSQL/Turso** - SQLite compatible cloud database
+- 🔐 **Zod 4** - Schema validation
 - 🌍 **@fastify/cors** - CORS support
 - 📝 **dotenv** - Environment variables
-- 🎯 **@prisma/adapter-libsql** - Database adapter
 
 #### External API:
 - 🎮 **PokeAPI** (https://pokeapi.co/) - Pokemon data with in-memory caching (1-hour TTL)
