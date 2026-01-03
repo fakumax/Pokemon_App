@@ -4,16 +4,14 @@ import { prisma } from '../lib/prisma.js';
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
 
 export default async function typeRoutes(fastify) {
-  // GET /types - Get all types from PokeAPI
+  // GET /types - Get all types from database
   fastify.get('/', async (request, reply) => {
     try {
-      const response = await axios.get(`${POKEAPI_BASE}/type`);
-      const types = response.data.results
-        .filter(type => !['unknown', 'shadow'].includes(type.name))
-        .map((type, index) => ({
-          id: index + 1,
-          name: type.name
-        }));
+      const types = await prisma.type.findMany({
+        orderBy: {
+          name: 'asc'
+        }
+      });
       
       return types;
     } catch (error) {

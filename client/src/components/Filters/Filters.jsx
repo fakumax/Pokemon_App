@@ -86,16 +86,13 @@ export const filterByType = (pokeSelected, pokemon) => {
 
 const Filters = ({ pokemon, setPokemonList, pokemon_types }) => {
   const [pokeSelected, setpokeSelected] = useState(null);
-  useEffect(() => {
-    setPokemonList(pokemon);
-  }, [pokemon]);
+  const [orderBy, setOrderBy] = useState([]);
 
   const FilterByDbApi = (orderMe) => {
     const filteredByDbApi = handleFilterDbApi(orderMe, pokemon);
     setPokemonList(filteredByDbApi);
   };
 
-  const [orderBy, setOrderBy] = useState([]);
   const handleOrderChange = (orderMe) => {
     const orderedByName = orderByName(orderMe, pokemon);
     setPokemonList(orderedByName);

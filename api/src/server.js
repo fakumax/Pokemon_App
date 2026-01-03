@@ -3,6 +3,36 @@ import cors from '@fastify/cors';
 import 'dotenv/config';
 import pokemonRoutes from './routes/pokemon.js';
 import typeRoutes from './routes/type.js';
+import { prisma } from './lib/prisma.js';
+import axios from 'axios';
+
+const POKEAPI_URL = 'https://pokeapi.co/api/v2';
+
+// Función para inicializar tipos si no existen
+async function initializeTypes() {
+  try {
+    const count = await prisma.type.count();
+    
+    if (count === 0) {
+      console.log('🌱 No types found. Loading from PokeAPI...');
+      const typesResponse = await axios.get(`${POKEAPI_URL}/type`);
+      const typesData = typesResponse.data.results;
+
+      for (const typeData of typesData.slice(0, 18)) {
+        const typeDetail = await axios.get(typeData.url);
+        await prisma.type.create({
+          data: { name: typeDetail.data.name }
+        });
+        console.log(`✓ Type loaded: ${typeDetail.data.name}`);
+      }
+      console.log('✅ Types initialized successfully!');
+    } else {
+      console.log(`✓ Types already loaded (${count} types found)`);
+    }
+  } catch (error) {
+    console.error('❌ Error initializing types:', error.message);
+  }
+}
 
 const fastify = Fastify({
   logger: {
@@ -22,6 +52,9 @@ await fastify.register(cors, {
   origin: process.env.CORS_ORIGIN || '*',
   credentials: true,
 });
+
+// Initialize types on startup (only if empty)
+await initializeTypes();
 
 // Register routes
 await fastify.register(pokemonRoutes, { prefix: '/pokemons' });

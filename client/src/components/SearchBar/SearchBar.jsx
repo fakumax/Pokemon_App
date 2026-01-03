@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
-import { searchPokemon } from '../../hooks/usePokemon';
-import { usePokemonStore } from '../../store/usePokemonStore';
 import './SearchBar.scss';
 //----------Icons----------
 import { VscSearch } from 'react-icons/vsc';
 //-------------------------
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
   const [name, setName] = useState('');
-  const setPokemonOnly = usePokemonStore((state) => state.setPokemonOnly);
 
   const submitPokemon = async (e) => {
     e.preventDefault();
-    try {
-      const data = await searchPokemon(name);
-      setPokemonOnly(data);
-    } catch (error) {
-      console.error('Error searching pokemon:', error);
+    onSearch(name.trim());
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setName(value);
+    if (!value.trim()) {
+      onSearch('');
     }
   };
 
@@ -28,7 +28,7 @@ const SearchBar = () => {
         autoComplete='off'
         placeholder='Pokemons'
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={handleInputChange}
       />
       <button type='submit'><VscSearch className = 'icon-search' /></button>
     </form>
