@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   POKEMON_LOCAL,
   TYPES_LOCAL,
@@ -55,6 +55,8 @@ export const useGetPokemonById = (id) => {
 
 // Hook para crear un pokémon
 export const usePostPokemon = () => {
+  const queryClient = useQueryClient();
+  
   return useMutation({
     mutationFn: async (makePokemon) => {
       const { data } = await axios.post(POKEMON_LOCAL, {
@@ -69,6 +71,10 @@ export const usePostPokemon = () => {
         types: makePokemon.types,
       });
       return data;
+    },
+    onSuccess: () => {
+      // Invalidar la caché de pokemons para refrescar la lista
+      queryClient.invalidateQueries({ queryKey: ['pokemons'] });
     },
   });
 };

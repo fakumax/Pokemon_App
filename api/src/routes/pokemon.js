@@ -41,7 +41,7 @@ async function fetchPokemonsFromAPI() {
 }
 
 export default async function pokemonRoutes(fastify) {
-  // GET /pokemons - Get all pokemons (cached)
+  // GET /pokemons - Get all pokemons (API + DB)
   fastify.get('/', async (request, reply) => {
     const { name } = request.query;
     
@@ -53,15 +53,52 @@ export default async function pokemonRoutes(fastify) {
         cacheTimestamp = now;
       }
       
+      // Obtener pokémons creados localmente
+      const localPokemons = await prisma.pokemon.findMany({
+        include: {
+          types: {
+            include: {
+              type: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+      
+      // Formatear pokémons locales
+      const formattedLocalPokemons = localPokemons.map(p => ({
+        id: p.id,
+        name: p.name,
+        life: p.life,
+        strength: p.strength,
+        defense: p.defense,
+        speed: p.speed,
+        height: p.height,
+        weight: p.weight,
+        img: p.img || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+        types: p.types.map(pt => pt.type)
+      }));
+      
+      // Crear un Set con nombres de pokémons locales (en minúsculas)
+      const localNames = new Set(formattedLocalPokemons.map(p => p.name.toLowerCase()));
+      
+      // Filtrar pokémons de la API que no estén en la DB local
+      const filteredApiPokemons = pokemonCache.filter(p => !localNames.has(p.name.toLowerCase()));
+      
+      // Combinar pokémons: locales primero, luego los de la API (sin duplicados)
+      const allPokemons = [...formattedLocalPokemons, ...filteredApiPokemons];
+      
       // Si hay búsqueda por nombre
       if (name) {
-        const found = pokemonCache.filter(p => 
+        const found = allPokemons.filter(p => 
           p.name.toLowerCase().includes(name.toLowerCase())
         );
         return found;
       }
       
-      return pokemonCache;
+      return allPokemons;
     } catch (error) {
       fastify.log.error(error);
       return reply.status(500).send({ error: error.message });
@@ -104,6 +141,7 @@ export default async function pokemonRoutes(fastify) {
 
       return {
         ...pokemon,
+        img: pokemon.img || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
         types: pokemon.types.map(pt => pt.type)
       };
     } catch (error) {
@@ -115,7 +153,11 @@ export default async function pokemonRoutes(fastify) {
   // POST /pokemons - Create new pokemon
   fastify.post('/', async (request, reply) => {
     try {
+      console.log('📨 Request body received:', JSON.stringify(request.body, null, 2));
+      
       const data = pokemonSchema.parse(request.body);
+      
+      console.log('✅ Validation passed, creating pokemon...');
       
       const pokemon = await prisma.pokemon.create({
         data: {
@@ -150,8 +192,10 @@ export default async function pokemonRoutes(fastify) {
       });
     } catch (error) {
       if (error.name === 'ZodError') {
+        console.error('❌ Validation error:', JSON.stringify(error.errors, null, 2));
         return reply.status(400).send({ error: error.errors });
       }
+      console.error('❌ Server error:', error);
       throw error;
     }
   });

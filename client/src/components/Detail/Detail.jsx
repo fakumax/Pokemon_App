@@ -39,7 +39,10 @@ const Detail = () => {
         </div>
         <div className='details_rigth'>
           <div className='details_header'>
-            <span className='details_id'>#{pokemon.id}</span>
+            {/* Solo mostrar ID si es numérico (de la API), ocultar UUIDs largos */}
+            {!isNaN(pokemon.id) && pokemon.id < 1000 && (
+              <span className='details_id'>#{pokemon.id}</span>
+            )}
             <span className='details_name'>{pokemon.name}</span>
           </div>
           <div className='details_body'>

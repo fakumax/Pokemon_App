@@ -15,10 +15,6 @@ const Body = ({ searchResults }) => {
   const [pokemonList, setPokemonList] = useState([]);
   const [filter, setFilters] = useState(false);
 
-  useEffect(() => {
-    setPokemonList(pokemons);
-  }, [pokemons]);
-
   //------ PAGINATION-----------
 
   const [itemsPerPage] = useState(12);
@@ -26,12 +22,22 @@ const Body = ({ searchResults }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState([]);
 
+  // Effect para actualizar pokemonList cuando cambian los pokemons
   useEffect(() => {
-    setTotalPages(Math.ceil(pokemonList.length / itemsPerPage));
-    setPage(pokemonList.slice(0, 12));
-    setCurrentPage(1);
-  }, [pokemonList, itemsPerPage]);
+    setPokemonList(pokemons);
+  }, [pokemons]);
 
+  // Effect para calcular total de páginas cuando cambia la lista
+  useEffect(() => {
+    const newTotalPages = Math.ceil(pokemonList.length / itemsPerPage);
+    setTotalPages(newTotalPages);
+    // Solo resetear a página 1 si la página actual es mayor que el nuevo total
+    if (currentPage > newTotalPages && newTotalPages > 0) {
+      setCurrentPage(1);
+    }
+  }, [pokemonList.length, itemsPerPage]);
+
+  // Effect para actualizar la página actual
   useEffect(() => {
     const lastIndex = currentPage * itemsPerPage;
     const firstIndex = lastIndex - itemsPerPage;

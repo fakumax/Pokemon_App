@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Autocomplete, TextField, Chip } from '@mui/material';
 import { usePostPokemon, useGetAllTypes } from '../../hooks/usePokemon';
-import { usePokemonStore } from '../../store/usePokemonStore';
 import './Form.scss';
 import Back from '../Back/Back';
 
@@ -50,8 +51,8 @@ export function validate(input) {
 
 //----------- FORM -------------
 const Form = () => {
-  const pokemon_types = usePokemonStore((state) => state.pokemon_types);
-  useGetAllTypes();
+  const navigate = useNavigate();
+  const { data: pokemon_types = [] } = useGetAllTypes();
   const { mutate: createPokemon } = usePostPokemon();
   const [errors, setErrors] = useState({});
   const [listTypes, setlistTypes] = useState([]);
@@ -63,6 +64,8 @@ const Form = () => {
     speed: '',
     height: '',
     weight: '',
+    img: '',
+    types: [],
   });
 
   const handleInputChange = (e) => {
@@ -79,43 +82,58 @@ const Form = () => {
     );
   };
 
-  const handleSelect = (pokemon) => {
-    setlistTypes([...listTypes, { id: pokemon }]);
+  const handleTypeChange = (event, newValue) => {
+    const typeIds = newValue.map(type => type.id);
+    setlistTypes(newValue);
     setInput({
       ...input,
-      types: [...listTypes],
+      types: typeIds,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createPokemon(input);
-  };
-
-  //---ADD ANOTHER---
-  const handleAddOther = (e) => {
-    e.preventDefault();
-    setInput({
-      name: '',
-      life: '',
-      strength: '',
-      defense: '',
-      speed: '',
-      height: '',
-      weight: '',
+    
+    // Validar que tenga al menos un tipo
+    if (!input.types || input.types.length === 0) {
+      alert('Debes seleccionar al menos un tipo para el Pokémon');
+      return;
+    }
+    
+    // Convertir strings a números
+    const pokemonData = {
+      name: input.name.trim(),
+      life: parseInt(input.life) || 0,
+      strength: parseInt(input.strength) || 0,
+      defense: parseInt(input.defense) || 0,
+      speed: parseInt(input.speed) || 0,
+      height: parseFloat(input.height) || 0,
+      weight: parseFloat(input.weight) || 0,
+      img: input.img.trim() || '',
+      types: input.types,
+    };
+    
+    console.log('Datos a enviar:', pokemonData);
+    
+    createPokemon(pokemonData, {
+      onSuccess: () => {
+        alert('¡Pokémon creado exitosamente!');
+        navigate('/home');
+      },
+      onError: (error) => {
+        console.error('Error creating pokemon:', error);
+        console.error('Response data:', error.response?.data);
+        alert('Error al crear el Pokémon. Verifica los datos.');
+      },
     });
   };
   return (
     <>
       <Back className='link-back' />
       <div className='container-form'>
-        <div className='wrapper'>
-          <div className='contacts'>
-            <h2>Create your Pokemon</h2>
-          </div>
-
+        <div className='form-wrapper'>
           <div className='login-box'>
-            {/* <h2>Create Pokémon</h2> */}
+            <h2 className='form-title'>Create Pokémon</h2>
             <form onSubmit={handleSubmit}>
               <div className='user-box'>
                 <label className='label-form'>Name</label>
@@ -209,34 +227,85 @@ const Form = () => {
                 />
                 {errors.weight && <p className='danger'>{errors.weight}</p>}
               </div>
+              <div className='user-box user-box-full'>
+                <label className='label-form'>Image URL</label>
+                <input
+                  id='img'
+                  name='img'
+                  type='url'
+                  autoComplete='off'
+                  placeholder='https://example.com/image.png'
+                  className='form-control-material'
+                  value={input.img}
+                  onChange={handleInputChange}
+                />
+              </div>
               <div className='user-box'>
                 <label className='select-label-form'>Types</label>
-                <select
-                  name='types'
-                  className='select-form'
-                  onChange={(e) => handleSelect(e.target.value)}
+                <Autocomplete
                   multiple
-                >
-                  {pokemon_types?.map((item, i) => {
-                    return (
-                      <option key={i} value={item.id}>
-                        {item.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                  id="pokemon-types"
+                  options={pokemon_types}
+                  getOptionLabel={(option) => option.name}
+                  value={listTypes}
+                  onChange={handleTypeChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      placeholder="Select types"
+                      className="autocomplete-input"
+                    />
+                  )}
+                  renderTags={(value, getTagProps) =>
+                    value.map((option, index) => {
+                      const { key, ...tagProps } = getTagProps({ index });
+                      return (
+                        <Chip
+                          key={key}
+                          label={option.name}
+                          {...tagProps}
+                          sx={{
+                            backgroundColor: '#DC0A2D',
+                            color: 'white',
+                            fontWeight: 700,
+                            textTransform: 'capitalize',
+                            '& .MuiChip-deleteIcon': {
+                              color: 'white',
+                              '&:hover': {
+                                color: '#ffcccb',
+                              },
+                            },
+                          }}
+                        />
+                      );
+                    })
+                  }
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      backgroundColor: 'var(--input-bg)',
+                      borderRadius: '12px',
+                      '& fieldset': {
+                        borderColor: 'var(--border-color)',
+                        borderWidth: '2px',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#DC0A2D',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#DC0A2D',
+                        boxShadow: '0 0 0 4px rgba(220, 10, 45, 0.1)',
+                      },
+                    },
+                    '& .MuiInputBase-input': {
+                      color: 'var(--text-primary)',
+                      fontWeight: 600,
+                    },
+                  }}
+                />
               </div>
-              <div></div>
-
-              <button type='submit' className='full-width'>
-                Create
-              </button>
-              <button
-                type='submit'
-                className='full-width'
-                onClick={handleAddOther}
-              >
-                Add Other
+              <button type='submit' className='btn-create'>
+                Create Pokémon
               </button>
             </form>
           </div>
