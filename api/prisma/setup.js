@@ -14,6 +14,12 @@ const client = createClient({
 
 async function setup() {
   try {
+    // Borrar tablas existentes para recrearlas correctamente
+    console.log('Dropping existing tables...');
+    await client.execute(`DROP TABLE IF EXISTS "PokemonType"`);
+    await client.execute(`DROP TABLE IF EXISTS "Pokemon"`);
+    await client.execute(`DROP TABLE IF EXISTS "Type"`);
+    
     // Crear tabla Type
     console.log('Creating Type table...');
     await client.execute(`
@@ -24,11 +30,11 @@ async function setup() {
     `);
     console.log('✅ Type table ready');
 
-    // Crear tabla Pokemon
+    // Crear tabla Pokemon con id INTEGER autoincrement
     console.log('Creating Pokemon table...');
     await client.execute(`
       CREATE TABLE IF NOT EXISTS "Pokemon" (
-        "id" TEXT NOT NULL PRIMARY KEY,
+        "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         "name" TEXT NOT NULL,
         "life" INTEGER,
         "strength" INTEGER,
@@ -43,11 +49,11 @@ async function setup() {
     `);
     console.log('✅ Pokemon table ready');
 
-    // Crear tabla PokemonType
+    // Crear tabla PokemonType con pokemonId INTEGER
     console.log('Creating PokemonType table...');
     await client.execute(`
       CREATE TABLE IF NOT EXISTS "PokemonType" (
-        "pokemonId" TEXT NOT NULL,
+        "pokemonId" INTEGER NOT NULL,
         "typeId" INTEGER NOT NULL,
         PRIMARY KEY ("pokemonId", "typeId"),
         FOREIGN KEY ("pokemonId") REFERENCES "Pokemon"("id") ON DELETE CASCADE,
