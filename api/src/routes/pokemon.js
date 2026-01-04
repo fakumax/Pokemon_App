@@ -1,4 +1,5 @@
 import axios from 'axios';
+import crypto from 'crypto';
 import { prisma } from '../lib/prisma.js';
 import { pokemonSchema, pokemonUpdateSchema } from '../schemas/pokemon.js';
 
@@ -167,6 +168,7 @@ export default async function pokemonRoutes(fastify) {
       
       const pokemon = await prisma.pokemon.create({
         data: {
+          id: crypto.randomUUID(),
           name: data.name,
           life: data.life,
           strength: data.strength,
