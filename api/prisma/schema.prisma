@@ -7,7 +7,7 @@ datasource db {
 }
 
 model Pokemon {
-  id       Int     @id @default(autoincrement())
+  id       String  @id @default(uuid())
   name     String
   life     Int?
   strength Int?
@@ -30,7 +30,7 @@ model Type {
 
 model PokemonType {
   pokemon   Pokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
-  pokemonId Int
+  pokemonId String
   type      Type    @relation(fields: [typeId], references: [id], onDelete: Cascade)
   typeId    Int
 

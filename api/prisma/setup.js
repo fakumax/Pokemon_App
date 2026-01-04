@@ -30,11 +30,11 @@ async function setup() {
     `);
     console.log('✅ Type table ready');
 
-    // Crear tabla Pokemon con id INTEGER autoincrement
+    // Crear tabla Pokemon con id TEXT (UUID)
     console.log('Creating Pokemon table...');
     await client.execute(`
       CREATE TABLE IF NOT EXISTS "Pokemon" (
-        "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        "id" TEXT NOT NULL PRIMARY KEY,
         "name" TEXT NOT NULL,
         "life" INTEGER,
         "strength" INTEGER,
@@ -49,11 +49,11 @@ async function setup() {
     `);
     console.log('✅ Pokemon table ready');
 
-    // Crear tabla PokemonType con pokemonId INTEGER
+    // Crear tabla PokemonType con pokemonId TEXT
     console.log('Creating PokemonType table...');
     await client.execute(`
       CREATE TABLE IF NOT EXISTS "PokemonType" (
-        "pokemonId" INTEGER NOT NULL,
+        "pokemonId" TEXT NOT NULL,
         "typeId" INTEGER NOT NULL,
         PRIMARY KEY ("pokemonId", "typeId"),
         FOREIGN KEY ("pokemonId") REFERENCES "Pokemon"("id") ON DELETE CASCADE,
