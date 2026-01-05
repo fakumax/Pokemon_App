@@ -1,8 +1,9 @@
 .Filter-Type {
   display: flex;
-  gap: 15px;
+  gap: 40px;
   align-items: center;
   flex-wrap: wrap;
+  padding: 0;
 
   label {
     color: var(--text-primary);
@@ -38,4 +39,13 @@
 .Filter-Type-left {
   display: flex;
   align-items: center;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.Filter-Type > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
 }

@@ -57,12 +57,14 @@ const Body = ({ searchResults }) => {
 
   return (
     <>
-      <button 
-        className={`filters-button ${filter ? 'active' : ''}`}
-        onClick={() => setFilters(!filter)}
-      >
-        <VscFilter className='icon-filter' />
-      </button>
+      {pokemons.length > 0 && (
+        <button 
+          className={`filters-button ${filter ? 'active' : ''}`}
+          onClick={() => setFilters(!filter)}
+        >
+          <VscFilter className='icon-filter' />
+        </button>
+      )}
       {/*-- ACTIVE ONLY IF STATE === TRUE --*/}
       {filter && (
         <div className='filters-show'>
@@ -71,9 +73,14 @@ const Body = ({ searchResults }) => {
       )}
 
       {/*-- IF POKEMON SEARCH HAS A RESULT --*/}
-      <div className={`${searchResults?.length ? 'Body_search' : 'Body_result'} ${filter ? 'with-filters' : ''}`}>
+      <div className={`${searchResults?.length ? 'Body_search' : 'Body_result'} ${filter ? 'with-filters' : ''} ${loadingPokemons && !pokemons.length ? 'is-loading' : ''}`}>
         {searchResults?.length > 0 ? (
           <Cards pokemons={searchResults} />
+        ) : loadingPokemons && !pokemons.length ? (
+          <div className='loading-container'>
+            <div className='spinner'></div>
+            <p>Loading Pokémons...</p>
+          </div>
         ) : pokemonList.length ? (
            /*--RENDER CARDS AND ARROW IF NOT LOADING  --*/ 
           <div>
@@ -83,9 +90,8 @@ const Body = ({ searchResults }) => {
             />
           </div>
         ) : (
-          <div className='loading-container'>
-            <div className='spinner'></div>
-            <p>Loading Pokémons...</p>
+          <div className='no-results-container'>
+            <p>No Pokémons found with the selected filters</p>
           </div>
         )
         }
