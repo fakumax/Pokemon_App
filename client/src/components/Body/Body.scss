@@ -12,10 +12,21 @@
   margin-top: 4rem;
   background: var(--bg-primary);
   min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
   transition: all 0.3s ease;
 
   &.with-filters {
     margin-top: 0;
+  }
+
+  &.is-loading {
+    height: calc(100vh - 6rem);
+    overflow: hidden;
+  }
+
+  > div {
+    overflow: visible;
   }
 }
 
@@ -97,7 +108,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
+  height: 100%;
+  flex: 1;
   gap: 20px;
 
   p {
@@ -125,4 +137,24 @@
 @keyframes pulse {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
+}
+
+/* NO RESULTS */
+.no-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+  gap: 20px;
+  padding: 40px 20px;
+
+  p {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    opacity: 0.8;
+  }
 }

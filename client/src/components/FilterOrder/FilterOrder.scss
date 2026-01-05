@@ -1,8 +1,10 @@
 .Filter-Order {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   align-items: center;
   flex-wrap: wrap;
+  min-width: 220px;
+  padding: 0;
 
   label {
     color: var(--text-primary);
